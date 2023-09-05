@@ -91,4 +91,90 @@ app.put("/User", async (req, res) => {
     }
 });
 
+
+app.post("/Note", async (req, res) => {
+    try {
+        const mongoReq = await axios.post(`${BaseURL}Nota`, { nota: { titulo: req.body.title, nota: req.body.content } }, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                res.status(mongoRes.status).json({ message: mongoRes.data.message, code: mongoRes.data.code });
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
+app.put("/Note/:id", async (req, res) => {
+    try {
+        const mongoReq = await axios.put(`${BaseURL}Nota?id=${req.params.id}`, { notaNova: { titulo: req.body.title, nota: req.body.content } }, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                res.status(mongoRes.status).json({ message: mongoRes.data.message, code: mongoRes.data.code });
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
+app.delete("/Note/:id", async (req, res) => {
+    try {
+        const mongoReq = await axios.delete(`${BaseURL}Nota?id=${req.params.id}`, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                res.status(mongoRes.status).json({ message: mongoRes.data.message, code: mongoRes.data.code });
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
+app.get("/Note/:id", async (req, res) => {
+    try {
+        const mongoReq = await axios.get(`${BaseURL}Nota?id=${req.params.id}`, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                res.status(mongoRes.status).json({ id: mongoRes.data.Nota._id, user: mongoRes.data.Nota.usuario, title: mongoRes.data.Nota.titulo, content: mongoRes.data.Nota.nota, date: mongoRes.data.Nota.data, visible: mongoRes.data.Nota.publica });
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
+app.put("/PublishNote/:id", async (req, res) => {
+    try {
+        const mongoReq = await axios.put(`${BaseURL}AtualizarPrivacidadeNota?id=${req.params.id}`, { _id: req.params.id }, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                res.status(mongoRes.status).json({ message: mongoRes.data.message, code: mongoRes.data.code });
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
+app.get("/Notes", async (req, res) => {
+    try {
+        const mongoReq = await axios.get(`${BaseURL}Notas`, { headers: { 'Authorization': req.headers.authorization } })
+            .then((mongoRes) => {
+                const result = JSON.stringify(mongoRes.data).replaceAll("_id", "id").replaceAll("usuario", "name").replaceAll("titulo", "title").replaceAll("nota", "content").replaceAll("data", "date").replaceAll("publica", "visible");
+                res.status(mongoRes.status).json(JSON.parse(result));
+            })
+            .catch((mongoError) => {
+                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+            });
+    } catch (e) {
+        res.status(500).json({ Error: e.message });
+    }
+});
+
 export default app;
