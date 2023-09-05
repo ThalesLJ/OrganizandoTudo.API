@@ -33,7 +33,7 @@ app.post("/CreateAccount", async (req, res) => {
             }
         }
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -51,7 +51,7 @@ app.post("/Login", async (req, res) => {
                 });
         }
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -65,7 +65,7 @@ app.post("/VerifyToken", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -79,7 +79,7 @@ app.get("/User", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -93,7 +93,7 @@ app.put("/User", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -108,7 +108,7 @@ app.post("/Note", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -122,7 +122,7 @@ app.put("/Note/:id", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -136,7 +136,7 @@ app.delete("/Note/:id", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -150,7 +150,7 @@ app.get("/Note/:id", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -164,7 +164,7 @@ app.put("/PublishNote/:id", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
@@ -179,7 +179,7 @@ app.get("/Notes", async (req, res) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
             });
     } catch (e) {
-        res.status(500).json({ Error: e.message });
+        res.status(500).json({ message: e.message });
     }
 });
 
