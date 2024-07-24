@@ -1,8 +1,10 @@
 import express from "express";
 import axios from "axios";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 const BaseURL = "https://data.mongodb-api.com/app/application-0-mqvuy/endpoint/";
 
 app.get("/", (req, res) => {
