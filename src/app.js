@@ -180,7 +180,7 @@ app.get("/Notes", async (req, res) => {
                 id: note._id,
                 user: note.usuario,
                 title: note.titulo,
-                content: note.nota,
+                content: note.nota.replaceAll('\n', '<br />'),
                 date: note.data,
                 visible: note.publica
             }));
