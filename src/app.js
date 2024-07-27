@@ -172,24 +172,23 @@ app.put("/PublishNote/:id", async (req, res) => {
 
 app.get("/Notes", async (req, res) => {
     try {
-        const mongoReq = await axios.get(`${BaseURL}Notas`, { headers: { 'Authorization': req.headers.authorization } })
-            .then((mongoRes) => {
-                const result = JSON.stringify(mongoRes.data);
-                
-                const normalizedNotes = notas.map(nota => ({
-                    id: nota._id,
-                    name: nota.usuario, // alterando o nome do campo
-                    title: nota.titulo,
-                    content: nota.nota,
-                    date: nota.data,
-                    visible: nota.publica
-                  }));
-                
-                res.status(mongoRes.status).json(normalizedNotes);
-            })
-            .catch((mongoError) => {
-                res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
-            });
+        const mongoReq = await axios.get(`${BaseURL}Notas`, {
+            headers: { 'Authorization': req.headers.authorization }
+        })
+        .then((mongoRes) => {
+            const result = mongoRes.data.map(note => ({
+                id: note._id,
+                user: note.usuario,
+                title: note.titulo,
+                content: note.nota,
+                date: note.data,
+                visible: note.publica
+            }));
+            res.status(mongoRes.status).json(result);
+        })
+        .catch((mongoError) => {
+            res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
+        });
     } catch (e) {
         res.status(500).json({ message: e.message });
     }
