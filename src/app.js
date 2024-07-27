@@ -174,8 +174,18 @@ app.get("/Notes", async (req, res) => {
     try {
         const mongoReq = await axios.get(`${BaseURL}Notas`, { headers: { 'Authorization': req.headers.authorization } })
             .then((mongoRes) => {
-                const result = JSON.stringify(mongoRes.data).replaceAll("_id", "id").replaceAll("usuario", "name").replaceAll("titulo", "title").replaceAll("nota", "content").replaceAll("data", "date").replaceAll("publica", "visible");
-                res.status(mongoRes.status).json(JSON.parse(result));
+                const result = JSON.stringify(mongoRes.data);
+                
+                const normalizedNotes = notas.map(nota => ({
+                    id: nota._id,
+                    name: nota.usuario, // alterando o nome do campo
+                    title: nota.titulo,
+                    content: nota.nota,
+                    date: nota.data,
+                    visible: nota.publica
+                  }));
+                
+                res.status(mongoRes.status).json(normalizedNotes);
             })
             .catch((mongoError) => {
                 res.status(mongoError.response.status).json({ message: mongoError.response.data.message, code: mongoError.response.data.code });
